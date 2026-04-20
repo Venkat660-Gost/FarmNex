@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agriculture Officers</title>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Search */
+        .search-box {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 250px;
+        }
+
+        /* Grid */
+        .officer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: gray;
+        }
+
+        .card button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: none;
+            background: green;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🌾 Agriculture Officers</h1>
+
+<!-- Search -->
+<div class="search-box">
+    <input type="text" id="search" placeholder="Search by area..." onkeyup="searchOfficer()">
+</div>
+
+<!-- Container -->
+<div class="officer-container" id="officerContainer"></div>
+
+<script>
+// 🔥 Replace with your Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBt4TGIfyclYiK-Dl8du_PSfkd0IokuQ8s",
+    authDomain: "raita-sahayaka.firebaseapp.com",
+    projectId: "raita-sahayaka",
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+let allOfficers = [];
+
+// 📥 Fetch Data
+db.collection("officers").get().then((data) => {
+    allOfficers = [];
+    data.forEach((doc) => {
+        allOfficers.push(doc.data());
+    });
+    displayOfficers(allOfficers);
+});
+
+// 🖼️ Display Function
+function displayOfficers(list) {
+    let container = document.getElementById("officerContainer");
+    container.innerHTML = "";
+
+    list.forEach((officer) => {
+        let card = `
+        <div class="card">
+            <img src="${officer.image}">
+            <h3>${officer.name}</h3>
+            <p>📍 ${officer.area}</p>
+            <p>📞 ${officer.phone}</p>
+            <button onclick="call('${officer.phone}')">Contact</button>
+        </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+// 🔍 Search Function
+function searchOfficer() {
+    let value = document.getElementById("search").value.toLowerCase();
+
+    let filtered = allOfficers.filter((o) =>
+        o.area.toLowerCase().includes(value)
+    );
+
+    displayOfficers(filtered);
+}
+
+// 📞 Call
+function call(number) {
+    window.location.href = "tel:" + number;
+}
+</script>
+
+</body>
+</html>

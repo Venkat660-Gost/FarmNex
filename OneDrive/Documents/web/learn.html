@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertiliser Details</title>
+
+<style>
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background-color: #cbc6c6;
+}
+.logo{
+    background-color: rgb(20, 104, 20);
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo img{
+    height: 40px;
+}
+.bar{
+    background-color: rgb(39, 169, 39);
+    padding: 10px;
+}
+.block{
+    background-color:white;
+    margin: 15px;
+}
+.block img{
+    height: 250px;
+    margin: 20px;
+}
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Language buttons */
+.lang-btns{
+    position: absolute;
+    right: 10px;
+    top: 60px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Language Buttons -->
+<div class="lang-btns">
+    <button onclick="translatePage('te')">తెలుగు</button>
+    <button onclick="translatePage('kn')">ಕನ್ನಡ</button>
+    <button onclick="translatePage('en')">English</button>
+</div>
+
+<!-- Logo -->
+<div class="logo"> 
+    <img src="FarmNex.png">
+    <span>Karnataka Farmer Assistance Site (E-Agri)</span>
+    <img src="l.png">
+</div>
+
+<div class="bar">
+    <a href="FarmerDas.html">Main page</a>
+</div>
+
+<div class="search">
+    <input type="search" placeholder="Search">
+</div>
+
+<div class="block">
+<table>
+<tr>
+<td rowspan="3">
+    <img src="https://www.dpi.nsw.gov.au/__data/assets/image/0009/798750/RiceBlast1.jpg">
+    <h1>-----Fertilizer------</h1>
+    <img src="https://5.imimg.com/data5/SELLER/Default/2025/5/510705365/XX/SN/IC/208914/rice-blast-disease-fungicide.jpg">
+</td>
+</tr>
+
+<td>
+<h1>Rice Blast Disease</h1>
+
+<h3>About disease:-</h3>
+<p>
+Rice blast is one of the most destructive diseases affecting rice crops worldwide, caused by the fungus Magnaporthe oryzae. It affects leaves, stems, nodes, and panicles, causing heavy losses.
+</p>
+
+<h3>Description and Symptoms:</h3>
+<p>
+Leaf Blast: Diamond-shaped spots with gray center and dark border.  
+Neck Blast: Causes grain failure.  
+Node Blast: Breaks plant stem.  
+Collar Blast: Kills leaf quickly.
+</p>
+
+<h3>Favorable Conditions:</h3>
+<p>
+High humidity, moderate temperature (24°C–28°C), and excess nitrogen increase disease spread.
+</p>
+
+<h3>Management Strategies:</h3>
+<p>
+Use resistant varieties, proper water management, and fungicide treatment.
+</p>
+
+</td>
+</table>
+
+<table>
+<tr>
+<td rowspan="3">
+    <img src="https://ag.fmc.com/ph/sites/default/files/inline-images/Sheath%20Blight.png">
+</td>
+</tr>
+
+<td>
+<h1>Sheath Blast</h1>
+</td>
+
+</table>
+</div>
+
+<!-- ✅ TRANSLATION SCRIPT -->
+<script>
+function translatePage(lang) {
+    if (lang === "en") {
+        location.reload();
+        return;
+    }
+
+    let elements = document.querySelectorAll("h1, h3, p, a, span, button");
+
+    elements.forEach(el => {
+        let text = el.innerText;
+
+        if (text.trim() !== "") {
+            fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${lang}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.responseData) {
+                    el.innerText = data.responseData.translatedText;
+                }
+            })
+            .catch(err => console.log(err));
+        }
+    });
+
+    // translate placeholder separately
+    let input = document.querySelector("input");
+    if (input) {
+        fetch(`https://api.mymemory.translated.net/get?q=Search&langpair=en|${lang}`)
+        .then(res => res.json())
+        .then(data => {
+            input.placeholder = data.responseData.translatedText;
+        });
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+/* Top Logo Bar */
+.logo{
+    background-color: rgb(20, 104, 20);
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img{
+    height: 80px;
+}
+
+/* Navigation Bar */
+.container{
+    background-color: rgb(37, 195, 37);
+    padding: 10px;
+    text-align: center;
+}
+
+.container a{
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.container a:hover{
+    text-decoration: underline;
+}
+/* Language buttons */
+.lang-btns{
+    position: absolute;
+    right: 10px;
+    top: 60px;
+}
+    </style>
+</head>
+<body>
+    
+<!-- Language Buttons -->
+<div class="lang-btns">
+    <button onclick="translatePage('te')">తెలుగు</button>
+    <button onclick="translatePage('kn')">ಕನ್ನಡ</button>
+    <button onclick="translatePage('en')">English</button>
+</div>
+
+    <!-- Logo -->
+<div class="logo"> 
+    <img src="FarmNex.png">
+    <span>Karnataka Farmer Assistance Site (E-Agri)</span>
+    <img src="l.png">
+</div>
+<!--Container-->
+    <div class="container">
+        <a href='FarmerDas.html'">Home</a>
+        <a href='market_price.html'">Market</a>
+        <a href='medicine.html'">Fertilizer-Details</a>
+        <a href='about_us.html'">About Web</a>
+        <a href='AgriDetails.html'">Officers Details</a>
+        <a href="Dashboard.html">Logout</a>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #87ceeb;
+            margin-top: 50px;
+        }
+
+        input {
+            padding: 10px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🌤 Weather App</h2>
+
+<input type="text" id="city" placeholder="Enter city name">
+<button onclick="getWeather()">Check Weather</button>
+
+<div id="result"></div>
+
+<script>
+function getWeather() {
+    let city = document.getElementById("city").value;
+
+    let apiKey = "84b79bf2a1e6fa30bfdf1598e634c2b6";
+
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        if (data.cod === "404") {
+            document.getElementById("result").innerHTML = "❌ City not found";
+            return;
+        }
+
+        let temp = data.main.temp;
+        let humidity = data.main.humidity;
+        let weather = data.weather[0].description;
+
+        document.getElementById("result").innerHTML = `
+            🌍 City: ${city} <br>
+            🌡 Temperature: ${temp}°C <br>
+            💧 Humidity: ${humidity}% <br>
+            ☁ Condition: ${weather}
+        `;
+    })
+    .catch(error => {
+        document.getElementById("result").innerHTML = "⚠ Error fetching data";
+    });
+}
+</script>
+<!-- ✅ TRANSLATION SCRIPT -->
+<script>
+function translatePage(lang) {
+    if (lang === "en") {
+        location.reload();
+        return;
+    }
+
+    let elements = document.querySelectorAll("h1, h3, p, a, span, button");
+
+    elements.forEach(el => {
+        let text = el.innerText;
+
+        if (text.trim() !== "") {
+            fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${lang}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.responseData) {
+                    el.innerText = data.responseData.translatedText;
+                }
+            })
+            .catch(err => console.log(err));
+        }
+    });
+
+    // translate placeholder separately
+    let input = document.querySelector("input");
+    if (input) {
+        fetch(`https://api.mymemory.translated.net/get?q=Search&langpair=en|${lang}`)
+        .then(res => res.json())
+        .then(data => {
+            input.placeholder = data.responseData.translatedText;
+        });
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Farmer Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family:Arial;
+background:#e8f5e9;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
+width:300px;
+text-align:center;
+}
+
+input{
+width:90%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+padding:10px 20px;
+background:#2e7d32;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1b5e20;
+}
+
+.link{
+margin-top:10px;
+color:blue;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🌾 Farmer Login</h2>
+
+<input type="number" id="phone" placeholder="Phone Number">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p class="link" onclick="showRegister()">New User? Register Here</p>
+<p class="link" onclick="forgetPass()">Forget Passward</p>
+
+<div id="registerBox" style="display:none;">
+
+<h3>Register</h3>
+<input type="text" id="regname" placeholder="Enter your name">
+<input type="number" id="regPhone" placeholder="Phone Number">
+<input type="password" id="regPassword" placeholder="Create Password">
+
+<button onclick="register()">Register</button>
+
+</div>
+<div id="forgertPass" style="display: none;">
+    <h3>Passward correction</h3>
+    <input type="number" id="phone" placeholder="Phone number">
+    <input type="number" id="otp" placeholder="Enter OTP">
+<button onclick="Submit()"></button>
+</div>
+
+</div>
+
+
+<script>
+
+// REGISTER
+
+function register(){
+
+let phone=document.getElementById("regPhone").value;
+
+let password=document.getElementById("regPassword").value;
+
+if(phone=="" || password==""){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+let users=JSON.parse(localStorage.getItem("farmers")) || [];
+
+let exists = users.find(u=>u.phone===phone);
+
+if(exists){
+
+alert("User already exists");
+
+return;
+
+}
+
+users.push({
+
+phone:phone,
+password:password
+
+});
+
+localStorage.setItem("farmers",JSON.stringify(users));
+
+alert("Registration Successful");
+
+document.getElementById("registerBox").style.display="none";
+
+}
+
+
+
+// LOGIN
+
+function login(){
+
+let phone=document.getElementById("phone").value;
+
+let password=document.getElementById("password").value;
+
+let users=JSON.parse(localStorage.getItem("farmers")) || [];
+
+let user = users.find(u=>u.phone===phone && u.password===password);
+
+if(user){
+
+localStorage.setItem("farmerPhone",phone);
+
+window.location.href="dashboard.html";
+
+}
+
+else{
+
+alert("Invalid Phone or Password");
+
+}
+
+}
+
+
+
+// SHOW REGISTER
+
+function showRegister(){
+
+document.getElementById("registerBox").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>

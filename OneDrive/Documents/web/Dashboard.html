@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<style>
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+/* Top Logo Bar */
+.logo{
+    background-color: rgb(20, 104, 20);
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img{
+    height: 80px;
+}
+
+/* Navigation Bar */
+.container{
+    background-color: rgb(37, 195, 37);
+    padding: 10px;
+    text-align: center;
+}
+
+.container a{
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.container a:hover{
+    text-decoration: underline;
+}
+
+/* Slider */
+.slider {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    width: 400%;
+    transition: transform 0.5s ease;
+}
+
+.slides img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* About Section */
+.about{
+    padding: 20px;
+    background-color: rgb(35, 118, 35);
+    color: white;
+}
+
+h1{
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Logo -->
+<div class="logo"> 
+    <img src="FarmNex.png">
+    <span>Karnataka Farmer Assistance Site (E-Agri)</span>
+    <img src="l.png">
+</div>
+
+<!-- Navigation -->
+<div class="container">
+    <a href="Dashboard.html">🏠Home</a>
+    <a href="loginpage.html">🔐Login</a>
+    <a href="register.html">👤➕Registration for new user</a>
+</div>
+
+<!-- Slider -->
+<div class="slider">
+    <div class="slides" id="slides">
+        <img src="image1.png">
+        <img src="image2.png">
+        <img src="image3.png">
+        <img src="image4.png">
+    </div>
+</div>
+
+<!-- About -->
+<div class="about">
+    <h1>🌾 About FarmNex</h1>
+
+    <h2>Objective</h2>
+    <p>
+        FarmNex is a web-based application developed to provide digital support and guidance to farmers in a simple and efficient manner. In today’s rapidly advancing world, technology plays a crucial role in improving agricultural practices, and FarmNex aims to connect farmers with essential information through an easy-to-use digital platform. The main objective of this project is to help farmers make informed decisions by providing 
+            access to important resources such as weather updates, crop information, market prices, and government 
+            schemes.The application is built using modern web technologies including HTML, CSS, and JavaScript, which 
+            ensure a well-structured design, visually appealing interface, and interactive user experience. FarmNex 
+            features a centralized dashboard that allows users to quickly access various services in an organized way. 
+            The design focuses on simplicity and usability so that even farmers with basic digital knowledge can 
+            navigate the platform without difficulty.FarmNex not only provides valuable information but also helps 
+            improve agricultural productivity and reduce risks by keeping users updated with timely data. It acts 
+            as a bridge between traditional farming practices and modern technological solutions. Additionally, the 
+            platform has the potential for future enhancements such as integration of real-time APIs, multilingual support, and mobile-friendly features to reach a wider audience.In conclusion, FarmNex is an innovative step towards digital agriculture, aiming to empower farmers with knowledge, increase efficiency, and support sustainable farming through a reliable and user-friendly web application.
+
+    </p>
+
+    <h3>Contact Details</h3>
+    <p>
+        Admin <br>
+        Address: Kampli Sugar Factory <br>
+        Ballari, Karnataka 583132 <br>
+        Phone: 8088858543
+    </p>
+</div>
+
+<!-- Script -->
+<script>
+let index = 0;
+let slides = document.getElementById("slides");
+
+setInterval(() => {
+    index++;
+    if (index > 3) index = 0;
+
+    slides.style.transform = "translateX(-" + index * 100 + "%)";
+}, 9000);
+</script>
+
+</body>
+</html>
